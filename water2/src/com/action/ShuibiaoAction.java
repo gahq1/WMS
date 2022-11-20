@@ -14,8 +14,6 @@ import com.entity.Shuibiao;
 import com.entity.User;
 import com.opensymphony.xwork2.ModelDriven;
 
-import com.util.Pagination;
-
 public class ShuibiaoAction extends BaseAction implements ModelDriven<Shuibiao> {
 	@Autowired
 	private ShuibiaoDAO shuibiaoDAO;
@@ -23,8 +21,8 @@ public class ShuibiaoAction extends BaseAction implements ModelDriven<Shuibiao> 
 	private UserDAO userDAO;
 	@Autowired
 	private JiesuantypeDAO jiesuantypeDAO;
-	
-	
+
+
 	public JiesuantypeDAO getJiesuantypeDAO() {
 		return jiesuantypeDAO;
 	}
@@ -52,10 +50,10 @@ public class ShuibiaoAction extends BaseAction implements ModelDriven<Shuibiao> 
 		List jiesuantypeList = jiesuantypeDAO.findByExample(new Jiesuantype());
 		Map request = getRequestMap();
 		request.put("jiesuantypeList", jiesuantypeList);
-		
+
 		List userList = userDAO.findByExample(new User());
 		getRequestMap().put("userList", userList);
-		
+
 		return "toadd";
 	}
 
@@ -70,14 +68,14 @@ public class ShuibiaoAction extends BaseAction implements ModelDriven<Shuibiao> 
 	public String toedit() {
 		shuibiao = shuibiaoDAO.findById(shuibiao.getId());
 		getRequestMap().put("Shuibiao", shuibiao);
-		
+
 		List jiesuantypeList = jiesuantypeDAO.findByExample(new Jiesuantype());
 		Map request = getRequestMap();
 		request.put("jiesuantypeList", jiesuantypeList);
-		
+
 		List userList = userDAO.findByExample(new User());
-		getRequestMap().put("userList", userList);		
-		
+		getRequestMap().put("userList", userList);
+
 		return "toedit";
 	}
 
@@ -102,14 +100,25 @@ public class ShuibiaoAction extends BaseAction implements ModelDriven<Shuibiao> 
 		request.put("shuibiaoList", shuibiaoList);
 		return "list";
 	}
-	
+
+	public String listuserid() {
+		String userinfo = ServletActionContext.getRequest().getParameter("userno");
+		String userid = userinfo.substring(0, userinfo.indexOf("_"));
+
+		List shuibiaoList = shuibiaoDAO.findByUserid(Integer.parseInt(userid));
+		Map request = getRequestMap();
+		request.put("shuibiaoList", shuibiaoList);
+		return "list";
+	}
+
+
 	/**
-	* 删除
-	*/
+	 * 删除
+	 */
 	public String del() {
 		shuibiaoDAO.delete(shuibiao);
 		this.setMessage("删除成功");
-		this.setPath("shuibiao!listpage.action");		
+		this.setPath("shuibiao!listpage.action");
 		return "succeed";
 	}
 

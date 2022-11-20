@@ -32,10 +32,10 @@ public class ShuibiaoDAO extends HibernateDaoSupport {
 				critertia, begin, pageSize);
 		return list;
 	}
-	
-	
-	
-		/**
+
+
+
+	/**
 	 * 分页查找
 	 */
 	public List<Shuibiao> findByPage(String queryString, int begin, int pageSize) {
@@ -49,7 +49,7 @@ public class ShuibiaoDAO extends HibernateDaoSupport {
 
 		return list;
 	}
-	
+
 
 	public void save(Shuibiao instance) {
 		this.getHibernateTemplate().save(instance);
@@ -66,6 +66,12 @@ public class ShuibiaoDAO extends HibernateDaoSupport {
 	public List findByExample(Shuibiao instance) {
 		return getHibernateTemplate().findByExample(instance);
 	}
+	public List findByUserid(int userid) {
+		String queryString = "from shuibiao where userid = " + userid;
+		return getHibernateTemplate().find(queryString);
+
+	}
+
 
 	public List findByProperty(String propertyName, Object value) {
 		String queryString = "from Shuibiao as model where model." + propertyName
